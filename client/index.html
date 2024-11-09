@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> NOW webSocket magic </h1>
+    <input id="text" type="text" placeholder="enter text here" />
+    <button id="send" style="color: blue;" > Send </button>
+    <h1> Message from server :<span id="serverMessage" ></span> </h1>
+    <script>
+        let ws = new WebSocket("ws://localhost:8080")
+        ws.onopen = ()=>
+        {
+            console.log("server is running !" )
+        }
+        ws.onmessage = (event) => {
+            console.log("Message from server:", event.data);
+
+            // Update the content of the <span> element with the server message
+            document.getElementById("serverMessage").innerText = event.data;
+        };
+
+        ws.error = (error)=>
+        {
+            console.log("error" , error)
+        }
+
+        let Bsend = document.getElementById("send").onclick = () =>{
+            let Ctext = document.getElementById("text").value
+            if(Ctext){
+            ws.send(Ctext)
+            console.log("message send to server", Ctext)
+        }
+        }
+
+
+    </script>
+</body>
+</html>
